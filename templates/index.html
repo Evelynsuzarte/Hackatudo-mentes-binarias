@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FocAE - Foco Consciente e Gamificacao Educacional</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0B2545',
+              navyLight: '#132E59',
+              teal: '#0D9488',
+              tealDark: '#0F766E',
+              cyan: '#0284C7',
+              emerald: '#059669',
+              slateBg: '#F8FAFC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 antialiased flex justify-center selection:bg-brand-navy selection:text-white">
+
+  <!-- CONTAINER MOBILE (PADRAO SMARTPHONE) -->
+  <div class="w-full max-w-md bg-white min-h-screen shadow-2xl relative flex flex-col pb-24 overflow-x-hidden border-x border-slate-200">
+
+    <!-- ===================================================================== -->
+    <!-- 1. HEADER MOBILE COM LOGO E SELECAO DE PAPEL -->
+    <!-- ===================================================================== -->
+    <header class="bg-brand-navy text-white pt-3 pb-3.5 px-4 sticky top-0 z-40 shadow-md">
+      
+      <!-- Barra de Status do Aparelho -->
+      <div class="flex items-center justify-between text-[11px] text-slate-300 font-mono mb-2 pb-1 border-b border-white/10">
+        <span id="statusBarClock">09:41</span>
+        <div class="flex items-center gap-2">
+          <span>5G</span>
+          <span class="px-1.5 py-0.5 rounded bg-white/10 text-[10px]">100%</span>
+        </div>
+      </div>
+
+      <!-- Marca FocAE + Logo Oficial -->
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <!-- Logo Oficial -->
+          <img src="/static/logo.jpg" alt="Logo FocAE" class="h-9 w-auto rounded-lg object-contain bg-white p-0.5 shadow-sm border border-white/20" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
+          <div id="logoFallback" style="display:none;" class="w-9 h-9 rounded-lg bg-white/10 border border-white/20 items-center justify-center font-black text-brand-cyan text-sm">
+            FA
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-lg tracking-tight leading-none text-white">Foc<span class="text-teal-300">AE</span></span>
+              <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-200 border border-teal-400/30 uppercase tracking-wider">Mobile</span>
+            </div>
+            <p class="text-[10px] text-slate-300 font-medium">Uso Consciente e Foco Ativo</p>
+          </div>
+        </div>
+
+        <!-- Seletor de Papel (Professor vs Aluno) -->
+        <div class="flex items-center bg-white/10 backdrop-blur-md rounded-xl p-1 border border-white/20">
+          <select id="userRoleSelect" onchange="switchRole(this.value)" class="bg-transparent text-white font-bold text-[11px] py-1 px-1.5 rounded-lg cursor-pointer focus:outline-none">
+            <optgroup label="Corpo Docente" class="text-slate-900">
+              <option value="teacher" selected>[Professor] Prof. Ricardo</option>
+            </optgroup>
+            <optgroup label="Alunos (Turma A)" class="text-slate-900">
+              <option value="aluno_1">[Aluno] Evelyn (Turma A)</option>
+              <option value="aluno_2">[Aluno] Thiago (Turma A)</option>
+            </optgroup>
+            <optgroup label="Alunos (Turma B)" class="text-slate-900">
+              <option value="aluno_3">[Aluno] Marley (Turma B)</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+
+      <!-- Banner de Modo Foco / Notificacoes Silenciadas -->
+      <div class="mt-2.5 bg-white/10 backdrop-blur-sm border border-white/15 rounded-xl p-2 flex items-center justify-between text-xs">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-teal-500/20 border border-teal-400/30 flex items-center justify-center text-teal-300">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+          </div>
+          <div>
+            <span id="dndStatusTitle" class="block font-bold text-[11px] leading-tight text-white">Modo Foco: Notificacoes Bloqueadas</span>
+            <span id="dndStatusCount" class="text-[10px] text-slate-300">14 alertas de redes sociais silenciados</span>
+          </div>
+        </div>
+        <button onclick="toggleDND()" class="px-2 py-1 rounded-lg bg-white/20 hover:bg-white/30 text-[10px] font-bold transition">
+          Alternar
+        </button>
+      </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- 2. NAVEGACAO DE ABAS MOBILE -->
+    <!-- ===================================================================== -->
+    <nav class="bg-white border-b border-slate-200 px-3 py-2 flex items-center justify-between text-xs font-semibold text-slate-600 sticky top-[118px] z-30 shadow-xs">
+      <button onclick="switchTab('sala')" id="tab-sala" class="tab-btn px-2.5 py-1.5 rounded-lg text-brand-cyan bg-sky-50 font-bold flex items-center gap-1.5 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+        <span id="tabSalaLabel">Painel da Sala</span>
+      </button>
+
+      <button onclick="switchTab('metas')" id="tab-metas" class="tab-btn px-2.5 py-1.5 rounded-lg hover:bg-slate-100 flex items-center gap-1.5 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Metas e Ofensiva</span>
+      </button>
+
+      <button onclick="switchTab('relatorio')" id="tab-relatorio" class="tab-btn px-2.5 py-1.5 rounded-lg hover:bg-slate-100 flex items-center gap-1.5 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        <span>Relatorio</span>
+      </button>
+
+      <button onclick="switchTab('extras')" id="tab-extras" class="tab-btn px-2.5 py-1.5 rounded-lg hover:bg-slate-100 flex items-center gap-1.5 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+        <span>Atividades</span>
+      </button>
+    </nav>
+
+    <!-- ===================================================================== -->
+    <!-- 3. CONTEUDO PRINCIPAL (ABAS) -->
+    <!-- ===================================================================== -->
+    <main class="p-4 space-y-4 flex-1">
+
+      <!-- =================================================================== -->
+      <!-- ABA 1: PAINEL DA SALA (VISAO DO PROFESSOR OU VISAO DO ALUNO) -->
+      <!-- =================================================================== -->
+      <section id="content-sala" class="space-y-4">
+
+        <!-- ----------------------------------------------------------------- -->
+        <!-- VISAO DO PROFESSOR (RF01, RF02, RF03, RF04, RF12) -->
+        <!-- ----------------------------------------------------------------- -->
+        <div id="view-teacher" class="space-y-4">
+          
+          <!-- RF01: Painel de Gestao e Criacao de Sala com PIN de 6 Digitos -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">RF01 - Administracao</span>
+                <h2 class="text-base font-bold text-brand-navy">Sessao de Aula Ativa</h2>
+              </div>
+              <button onclick="createNewRoom()" class="px-3 py-1.5 rounded-xl bg-brand-navy hover:bg-brand-navyLight text-white text-xs font-bold shadow-xs transition flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                <span>Criar Nova Sala</span>
+              </button>
+            </div>
+
+            <!-- Card de Destaque do PIN -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-slate-500 font-semibold uppercase block">Codigo PIN da Sala</span>
+                <div class="flex items-center gap-2">
+                  <span id="teacherRoomPinDisplay" class="text-2xl font-extrabold tracking-widest text-brand-navy font-mono">492810</span>
+                  <span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-bold">Ativa</span>
+                </div>
+                <p id="teacherRoomMeta" class="text-[11px] text-slate-500 mt-0.5">Matematica Ativa | Turma A (1o Ano Medio)</p>
+              </div>
+              <button onclick="copyPIN()" class="p-2 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-600 text-xs font-bold transition">
+                Copiar
+              </button>
+            </div>
+          </div>
+
+          <!-- RF03: Disparador do Cronometro Coletivo de Foco -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">RF03 - Foco Coletivo</span>
+                <h3 class="text-sm font-bold text-brand-navy">Iniciar Ciclo de Concentracao</h3>
+              </div>
+              <span id="teacherFocusBadge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600">Aguardando</span>
+            </div>
+
+            <p class="text-xs text-slate-600 mb-3">Dispare o temporizador de estudo coletivo sincronizado para todos os estudantes conectados.</p>
+
+            <div class="grid grid-cols-3 gap-2 mb-3">
+              <button onclick="setFocusDuration(1)" class="focus-dur-btn p-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:border-brand-teal text-center" data-dur="1">1 min (Teste)</button>
+              <button onclick="setFocusDuration(15)" class="focus-dur-btn p-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:border-brand-teal text-center" data-dur="15">15 min</button>
+              <button onclick="setFocusDuration(25)" class="focus-dur-btn p-2 rounded-xl border-2 border-brand-teal bg-teal-50 text-xs font-bold text-brand-tealDark text-center" data-dur="25">25 min (Padrao)</button>
+            </div>
+
+            <div class="flex gap-2">
+              <button onclick="startCollectiveFocus()" id="btnStartFocus" class="flex-1 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-xs transition flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>Iniciar Ciclo para a Sala</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- RF04: Acionamento de Atividades Dinamicas (Kahoot, Gartic, Quizizz, Mentimeter) -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">RF04 - Metodologias Ativas</span>
+            <h3 class="text-sm font-bold text-brand-navy mb-2">Transmitir Dinamica para a Sala</h3>
+            <p class="text-xs text-slate-600 mb-3">Envie um link rapido de participacao que surgira instantaneamente na tela dos alunos conectados.</p>
+
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="broadcastDynamic('Kahoot!', 'Torneio de Algebra e Fracoes', 'https://kahoot.it/?pin=492810', '492810')" class="p-2.5 rounded-xl border border-slate-200 hover:border-sky-500 bg-slate-50 hover:bg-sky-50/50 text-left transition">
+                <span class="text-xs font-bold text-sky-800 block">Kahoot!</span>
+                <span class="text-[10px] text-slate-500 block">Torneio de Algebra</span>
+              </button>
+
+              <button onclick="broadcastDynamic('Gartic', 'Desenho: Organelas Celulares', 'https://gartic.com.br', 'SALA-BIO')" class="p-2.5 rounded-xl border border-slate-200 hover:border-teal-500 bg-slate-50 hover:bg-teal-50/50 text-left transition">
+                <span class="text-xs font-bold text-teal-800 block">Gartic</span>
+                <span class="text-[10px] text-slate-500 block">Desenho Pedagogico</span>
+              </button>
+
+              <button onclick="broadcastDynamic('Quizizz', 'Desafio Relampago', 'https://quizizz.com/join', 'QZ-4928')" class="p-2.5 rounded-xl border border-slate-200 hover:border-indigo-500 bg-slate-50 hover:bg-indigo-50/50 text-left transition">
+                <span class="text-xs font-bold text-indigo-800 block">Quizizz</span>
+                <span class="text-[10px] text-slate-500 block">Quiz no Proprio Ritmo</span>
+              </button>
+
+              <button onclick="broadcastDynamic('Mentimeter', 'Nuvem de Palavras Coletiva', 'https://www.menti.com', 'MENTI-99')" class="p-2.5 rounded-xl border border-slate-200 hover:border-slate-500 bg-slate-50 hover:bg-slate-100 text-left transition">
+                <span class="text-xs font-bold text-slate-800 block">Mentimeter</span>
+                <span class="text-[10px] text-slate-500 block">Sondagem de Opiniao</span>
+              </button>
+            </div>
+
+            <!-- Status do Ultimo Envio -->
+            <div id="teacherLastActivity" class="mt-3 p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-xs flex items-center justify-between">
+              <div>
+                <span class="text-[10px] font-bold text-slate-500 uppercase block">Atividade Transmitida</span>
+                <span id="teacherLastActivityTitle" class="font-bold text-slate-800">Kahoot! - Torneio de Algebra</span>
+              </div>
+              <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 text-[10px] font-bold">Ativa na tela</span>
+            </div>
+          </div>
+
+          <!-- RF02: Painel de Controle ao Vivo (Alunos Conectados) -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">RF02 - Monitoramento ao Vivo</span>
+                <h3 class="text-sm font-bold text-brand-navy">Alunos Conectados (<span id="teacherConnectedCount">2</span>)</h3>
+              </div>
+              <button onclick="refreshRoomState()" class="text-slate-500 hover:text-slate-800 p-1.5 rounded-lg border border-slate-200 text-[11px] font-bold flex items-center gap-1 transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                <span>Atualizar</span>
+              </button>
+            </div>
+
+            <div id="teacherStudentsList" class="space-y-2">
+              <!-- Item Aluno Evelyn -->
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-7 h-7 rounded-full bg-teal-100 text-teal-800 font-bold flex items-center justify-center text-xs">E</div>
+                  <div>
+                    <span class="font-bold text-slate-800 block leading-tight">Evelyn</span>
+                    <span class="text-[10px] text-slate-500">Ofensiva: 5 dias | Conectada</span>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">Foco Ativo</span>
+                  <span class="block text-[10px] text-slate-500 mt-0.5">+20 pts na sessao</span>
+                </div>
+              </div>
+
+              <!-- Item Aluno Thiago -->
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-7 h-7 rounded-full bg-sky-100 text-sky-800 font-bold flex items-center justify-center text-xs">T</div>
+                  <div>
+                    <span class="font-bold text-slate-800 block leading-tight">Thiago</span>
+                    <span class="text-[10px] text-slate-500">Ofensiva: 3 dias | Conectado</span>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">Foco Ativo</span>
+                  <span class="block text-[10px] text-slate-500 mt-0.5">+15 pts na sessao</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RF12: Meta Coletiva da Sala -->
+          <div class="bg-gradient-to-br from-brand-navy to-brand-navyLight text-white rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-300 block">RF12 - Meta Coletiva da Turma</span>
+                <h3 class="text-sm font-bold">Progresso para Recompensa</h3>
+              </div>
+              <span id="teacherGoalPercentage" class="text-xs font-bold font-mono px-2 py-0.5 rounded-md bg-white/20">70.0%</span>
+            </div>
+
+            <!-- Barra de Progresso -->
+            <div class="w-full bg-white/20 rounded-full h-3 mb-2 overflow-hidden">
+              <div id="teacherGoalProgressBar" class="bg-teal-400 h-3 rounded-full transition-all duration-500" style="width: 70%;"></div>
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] text-slate-300">
+              <span id="teacherGoalPointsText">Pontos Coletivos: 105 / 150 pts</span>
+              <span>Alvo: 100%</span>
+            </div>
+
+            <!-- Recompensa -->
+            <div class="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-xs">
+              <div>
+                <span class="text-[10px] text-slate-400 block uppercase">Recompensa da Sala:</span>
+                <strong id="teacherRewardText" class="text-white">5 minutos livres no final da aula</strong>
+              </div>
+              <span id="teacherRewardStatus" class="px-2 py-0.5 rounded bg-white/10 text-[10px] font-bold text-teal-200">Em Progresso</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ----------------------------------------------------------------- -->
+        <!-- VISAO DO ALUNO (RF05, RF06, RF07, RF08, RF09, RF10, RF11, RF12) -->
+        <!-- ----------------------------------------------------------------- -->
+        <div id="view-student" class="space-y-4" style="display:none;">
+
+          <!-- RF05: Entrada na Sala com Nome e PIN de 6 Digitos -->
+          <div id="studentJoinBox" class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">RF05 - Participacao na Aula</span>
+            <h3 class="text-sm font-bold text-brand-navy mb-2">Ingressar na Sessao Ativa</h3>
+            <p class="text-xs text-slate-600 mb-3">Digite o codigo PIN de 6 digitos fornecido pelo professor para sincronizar sua presenca e modo foco.</p>
+
+            <div class="space-y-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Seu Nome</label>
+                <input type="text" id="studentInputName" value="Evelyn" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-800 focus:outline-none focus:border-brand-cyan">
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Codigo PIN (6 Digitos)</label>
+                <input type="text" id="studentInputPin" value="492810" maxlength="6" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-mono font-bold tracking-widest text-brand-navy focus:outline-none focus:border-brand-cyan text-center">
+              </div>
+
+              <button onclick="joinRoomStudent()" class="w-full py-2.5 rounded-xl bg-brand-cyan hover:bg-sky-700 text-white text-xs font-bold shadow-xs transition">
+                Entrar na Sala de Aula
+              </button>
+            </div>
+          </div>
+
+          <!-- Card de Sala Conectada (Quando Ja Ingressou) -->
+          <div id="studentJoinedStatus" class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-teal-100 text-teal-800 font-bold flex items-center justify-center text-xs">
+                OK
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 font-bold uppercase block">Sala Conectada</span>
+                <span id="studentRoomLabel" class="text-xs font-bold text-brand-navy">PIN 492810 | Matematica Ativa</span>
+                <p id="studentTeacherLabel" class="text-[10px] text-slate-500">Prof. Ricardo</p>
+              </div>
+            </div>
+            <span class="px-2 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-[10px] font-bold">Conectado</span>
+          </div>
+
+          <!-- RF04: Banner de Dinamica Transmitida pelo Professor -->
+          <div id="studentActivityBanner" class="bg-sky-50 border border-sky-200 rounded-2xl p-3.5 shadow-xs">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-sky-700 block">Dinamica Acionada pelo Docente</span>
+              <span class="px-2 py-0.5 rounded bg-sky-200 text-sky-900 text-[10px] font-bold" id="studentActivityTool">Kahoot!</span>
+            </div>
+            <h4 id="studentActivityTitle" class="text-xs font-bold text-slate-900 mb-1">Torneio de Algebra e Fracoes</h4>
+            <p class="text-[11px] text-slate-600 mb-2.5">O professor iniciou uma dinamica interativa nesta aula. Participe com a turma.</p>
+            <a id="studentActivityLink" href="https://kahoot.it/?pin=492810" target="_blank" class="w-full py-2 rounded-xl bg-brand-cyan hover:bg-sky-700 text-white text-xs font-bold block text-center transition">
+              Abrir Dinamica no Navegador
+            </a>
+          </div>
+
+          <!-- RF06: Modo Foco em Execucao (Contador Regressivo) -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs text-center">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">RF06 - Modo Foco em Execucao</span>
+            <h3 class="text-sm font-bold text-brand-navy mb-1">Ciclo de Concentracao da Sala</h3>
+            <p class="text-[11px] text-slate-500 mb-3">Mantenha o app aberto nesta tela. Sair do app zerara o tempo desta rodada.</p>
+
+            <!-- Display do Cronometro -->
+            <div class="my-2 py-3 px-4 bg-slate-50 border border-slate-200 rounded-2xl inline-block">
+              <span id="studentTimerDisplay" class="text-4xl font-extrabold font-mono tracking-wider text-brand-navy">24:59</span>
+              <span id="studentRoundStatus" class="block text-[10px] font-bold text-teal-700 mt-0.5">Rodada Ativa: +10 pts por minuto</span>
+            </div>
+
+            <!-- Frase Reflexiva Pedagógica -->
+            <p class="text-[11px] text-slate-500 italic mt-2">"A atencao plena fortalece a memoria e reduz a ansiedade dos estudos."</p>
+
+            <!-- Controles do Aluno -->
+            <div class="mt-4 flex gap-2 justify-center">
+              <button onclick="toggleStudentFocusTimer()" id="btnStudentTimerToggle" class="px-4 py-2 rounded-xl bg-brand-navy hover:bg-brand-navyLight text-white font-bold text-xs shadow-xs transition">
+                Pausar Temporizador
+              </button>
+              <button onclick="simulateTabExit()" class="px-3 py-2 rounded-xl border border-rose-300 text-rose-700 hover:bg-rose-50 font-bold text-xs transition">
+                Simular Saida de Aba (RF07)
+              </button>
+            </div>
+          </div>
+
+          <!-- RF11: Ofensiva e Pontuacao Individual (RF09) -->
+          <div class="grid grid-cols-2 gap-3">
+            <!-- RF11: Streak -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-3.5 shadow-xs">
+              <span class="text-[10px] font-bold uppercase text-slate-400 block">RF11 - Sequencia</span>
+              <strong id="studentStreakDisplay" class="text-xs font-bold text-brand-navy block mt-0.5">Ofensiva: 5 dias seguidos</strong>
+              <span class="text-[10px] text-slate-500 block mt-1">Presenca consecutiva nas aulas</span>
+            </div>
+
+            <!-- RF09: Pontos Individuais -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-3.5 shadow-xs">
+              <span class="text-[10px] font-bold uppercase text-slate-400 block">RF09 - Pontos</span>
+              <strong id="studentPointsDisplay" class="text-xs font-bold text-teal-700 block mt-0.5">70 pontos</strong>
+              <span class="text-[10px] text-slate-500 block mt-1">+10 pts a cada minuto de foco</span>
+            </div>
+          </div>
+
+          <!-- RF12: Meta Coletiva da Sala (Visivel para o Aluno) -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Meta Coletiva da Sala (RF12)</span>
+              <span id="studentGoalPercent" class="text-[11px] font-bold text-brand-navy">70.0%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-2 mb-1.5 overflow-hidden">
+              <div id="studentGoalBar" class="bg-teal-600 h-2 rounded-full transition-all duration-500" style="width: 70%;"></div>
+            </div>
+            <p class="text-[10px] text-slate-600">Recompensa da turma ao atingir 100%: <strong>5 minutos livres no final da aula</strong>.</p>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- ABA 2: METAS E OFENSIVA (RF11, RF12, MISSOES DE SAUDE MENTAL) -->
+      <!-- =================================================================== -->
+      <section id="content-metas" class="space-y-4" style="display:none;">
+
+        <!-- Card de Ofensiva (RF11) -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">RF11 - Sequencia de Presenca</span>
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 id="streakTitleCard" class="text-base font-bold text-brand-navy">Ofensiva: 5 dias seguidos</h3>
+              <p class="text-xs text-slate-500">Participando ativamente das dinamicas escolares sem interrupcoes.</p>
+            </div>
+            <button onclick="checkInAttendance()" class="px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold transition">
+              Confirmar Hoje
+            </button>
+          </div>
+        </div>
+
+        <!-- Meta Coletiva da Turma (RF12) -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">RF12 - Pacto Coletivo</span>
+          <h3 class="text-sm font-bold text-brand-navy mb-1">Barra de Progresso da Turma</h3>
+          <p class="text-xs text-slate-600 mb-3">Todos os minutos de foco acumulados pelos alunos conectados preenchem a barra coletiva.</p>
+
+          <div class="w-full bg-slate-100 rounded-full h-3 mb-2 overflow-hidden border border-slate-200">
+            <div id="metasTabGoalBar" class="bg-teal-500 h-3 rounded-full" style="width: 70%;"></div>
+          </div>
+          <div class="flex items-center justify-between text-xs text-slate-600 mb-3">
+            <span id="metasTabPointsText">105 / 150 pontos acumulados</span>
+            <span id="metasTabPercentText" class="font-bold text-brand-navy">70%</span>
+          </div>
+
+          <div class="p-3 rounded-xl bg-teal-50 border border-teal-200 text-xs text-teal-900">
+            <strong class="block mb-0.5 font-bold">Recompensa da Turma:</strong>
+            5 minutos livres no final da aula apos atingir 100% da meta.
+          </div>
+        </div>
+
+        <!-- Missoes de Saude Mental e Desconexao Consciente -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Habitos Saudaveis</span>
+          <h3 class="text-sm font-bold text-brand-navy mb-3">Missoes de Autorregulacao</h3>
+
+          <div class="space-y-2.5">
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+              <div>
+                <strong class="text-slate-800 block">Pausa Consciente no Recreio</strong>
+                <p class="text-[11px] text-slate-500">20 minutos de intervalo conversando longe das telas.</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-teal-100 text-teal-800 text-[10px] font-bold">+30 pts</span>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+              <div>
+                <strong class="text-slate-800 block">Minuto Zen (Respiracao 4-7-8)</strong>
+                <p class="text-[11px] text-slate-500">Autorregulacao emocional antes de atividades avaliativas.</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-teal-100 text-teal-800 text-[10px] font-bold">+15 pts</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- ABA 3: RELATORIO SEMANAL (USO CONSCIENTE DO SMARTPHONE) -->
+      <!-- =================================================================== -->
+      <section id="content-relatorio" class="space-y-4" style="display:none;">
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Metricas Semanais</span>
+              <h3 class="text-base font-bold text-brand-navy">Relatorio de Uso do Celular</h3>
+            </div>
+            <span id="reportScopeBadge" class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[10px] font-bold">Turma A</span>
+          </div>
+
+          <p class="text-xs text-slate-600 mb-3">Distribuicao do tempo de tela na escola: Aprendizagem Ativa vs Redes Sociais.</p>
+
+          <!-- Grafico de Barras em Tailwind -->
+          <div class="space-y-2.5 my-3">
+            <div>
+              <div class="flex justify-between text-[11px] font-semibold text-slate-700 mb-1">
+                <span>Segunda-feira</span>
+                <span class="text-teal-700 font-bold">71% Educativo (50m)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden flex">
+                <div class="bg-teal-600 h-2.5" style="width: 71%;"></div>
+                <div class="bg-slate-300 h-2.5" style="width: 29%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-[11px] font-semibold text-slate-700 mb-1">
+                <span>Terca-feira</span>
+                <span class="text-teal-700 font-bold">81% Educativo (65m)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden flex">
+                <div class="bg-teal-600 h-2.5" style="width: 81%;"></div>
+                <div class="bg-slate-300 h-2.5" style="width: 19%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-[11px] font-semibold text-slate-700 mb-1">
+                <span>Quarta-feira</span>
+                <span class="text-teal-700 font-bold">84% Educativo (55m)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden flex">
+                <div class="bg-teal-600 h-2.5" style="width: 84%;"></div>
+                <div class="bg-slate-300 h-2.5" style="width: 16%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-[11px] font-semibold text-slate-700 mb-1">
+                <span>Quinta-feira</span>
+                <span class="text-teal-700 font-bold">80% Educativo (60m)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden flex">
+                <div class="bg-teal-600 h-2.5" style="width: 80%;"></div>
+                <div class="bg-slate-300 h-2.5" style="width: 20%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-[11px] font-semibold text-slate-700 mb-1">
+                <span>Sexta-feira</span>
+                <span class="text-teal-700 font-bold">87% Educativo (55m)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden flex">
+                <div class="bg-teal-600 h-2.5" style="width: 87%;"></div>
+                <div class="bg-slate-300 h-2.5" style="width: 13%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Legenda -->
+          <div class="flex items-center gap-4 text-[11px] text-slate-600 pt-2 border-t border-slate-100">
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-sm bg-teal-600"></span>
+              <span>Uso Educativo / Dinamicas</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-sm bg-slate-300"></span>
+              <span>Redes Silenciadas</span>
+            </div>
+          </div>
+
+          <!-- Destaque / Insight -->
+          <div class="mt-3 p-3 rounded-xl bg-sky-50 border border-sky-100 text-xs text-sky-900">
+            <strong>Analise Semanal:</strong> A Turma A reduziu o uso de redes sociais em 48% durante as aulas esta semana.
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- ABA 4: ATIVIDADES, DESAFIOS FOTOGRAFICOS E PILULAS DE CURIOSIDADE -->
+      <!-- =================================================================== -->
+      <section id="content-extras" class="space-y-4" style="display:none;">
+
+        <!-- Pilulas de Conhecimento Geral (Curiosidades Educativas) -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Pílulas do Saber</span>
+              <h3 class="text-sm font-bold text-brand-navy">Curiosidade de Conhecimentos Gerais</h3>
+            </div>
+            <button onclick="nextTrivia()" class="text-[11px] font-bold text-brand-cyan hover:underline">
+              Proxima
+            </button>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+            <span id="triviaCategory" class="px-2 py-0.5 rounded bg-slate-200 text-slate-700 text-[10px] font-bold uppercase block w-fit mb-1.5">Neurociencia</span>
+            <strong id="triviaTitle" class="text-slate-900 block font-bold text-xs mb-1">O poder do cerebro</strong>
+            <p id="triviaContent" class="text-[11px] text-slate-600 leading-relaxed">O cerebro humano consome cerca de 20% de toda a energia do corpo, mesmo representando apenas 2% da massa corporal.</p>
+          </div>
+        </div>
+
+        <!-- Desafios Fotograficos no Mundo Real (Photo Quests) -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Conexao com o Real</span>
+          <h3 class="text-sm font-bold text-brand-navy mb-2">Desafios Fotograficos Escolares</h3>
+          <p class="text-xs text-slate-600 mb-3">Tire fotos do ambiente fisico escolar para pontuar e desconectar das redes.</p>
+
+          <div class="space-y-2.5">
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+              <div>
+                <strong class="text-slate-800 block">Algo Verde no Patio</strong>
+                <span class="text-[10px] text-slate-500">Fotografe uma arvore, grama ou planta</span>
+              </div>
+              <button onclick="submitPhotoQuest('Q1_ALGO_VERDE')" class="px-3 py-1.5 rounded-xl bg-brand-navy hover:bg-brand-navyLight text-white text-[11px] font-bold transition">
+                Enviar Foto (+25)
+              </button>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+              <div>
+                <strong class="text-slate-800 block">Uma Flor Bonita no Jardim</strong>
+                <span class="text-[10px] text-slate-500">Fotografe detalhes naturais no espaco escolar</span>
+              </div>
+              <button onclick="submitPhotoQuest('Q2_FLOR_BONITA')" class="px-3 py-1.5 rounded-xl bg-brand-navy hover:bg-brand-navyLight text-white text-[11px] font-bold transition">
+                Enviar Foto (+25)
+              </button>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+              <div>
+                <strong class="text-slate-800 block">Livro Fisico na Biblioteca</strong>
+                <span class="text-[10px] text-slate-500">Fotografe a capa de um livro que despertou curiosidade</span>
+              </div>
+              <button onclick="submitPhotoQuest('Q3_LIVRO_FISICO')" class="px-3 py-1.5 rounded-xl bg-brand-navy hover:bg-brand-navyLight text-white text-[11px] font-bold transition">
+                Enviar Foto (+30)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Anexo e Submissao de Atividade em PDF -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Entregas Avaliativas</span>
+          <h3 class="text-sm font-bold text-brand-navy mb-2">Anexar Atividade em PDF</h3>
+          <p class="text-xs text-slate-600 mb-3">Envie arquivos PDF das atividades desenvolvidas para registro do docente.</p>
+
+          <div class="space-y-2.5">
+            <input type="file" id="pdfFileInput" accept=".pdf" class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer">
+            <button onclick="uploadPdfActivity()" class="w-full py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold shadow-xs transition">
+              Confirmar Envio do PDF (+20 pts)
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- 4. MODAL ALERTA: RF07 - DETECTOR DE SAIDA (ANTIDISTRACAO) -->
+    <!-- ===================================================================== -->
+    <div id="modalExitAlert" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4" style="display:none;">
+      <div class="bg-white w-full max-w-sm rounded-2xl p-5 text-center shadow-2xl border border-rose-200 animate-bounce-short">
+        <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center font-black text-xl mb-3">
+          !
+        </div>
+        <span class="text-[10px] font-bold uppercase tracking-wider text-rose-600 block">RF07 - Perda de Foco Detectada</span>
+        <h3 class="text-base font-extrabold text-slate-900 mt-1 mb-2">Atencao: Voce Saiu da Tela</h3>
+        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+          O sistema identificou que voce trocou de aba ou minimizou o aplicativo durante o ciclo de foco. Conforme as regras, o tempo desta rodada individual foi zerado.
+        </p>
+        <button onclick="dismissExitAlert()" class="w-full py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-xs transition">
+          Entendi e Retomar Foco
+        </button>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- 5. MODAL TRAVA: RF08 & RF10 - PAUSA CONSCIENTE (DESCANSO VISUAL) -->
+    <!-- ===================================================================== -->
+    <div id="modalConsciousPause" class="fixed inset-0 z-50 bg-brand-navy/95 backdrop-blur-md flex items-center justify-center p-4" style="display:none;">
+      <div class="bg-white w-full max-w-sm rounded-3xl p-6 text-center shadow-2xl border border-teal-200">
+        <div class="w-14 h-14 rounded-2xl bg-teal-50 border border-teal-200 text-teal-700 mx-auto flex items-center justify-center font-bold text-lg mb-3">
+          20/20
+        </div>
+        <span class="text-[10px] font-bold uppercase tracking-wider text-teal-700 block">RF08 - Pausa Consciente Obrigatória</span>
+        <h3 class="text-lg font-black text-brand-navy mt-1 mb-2">Descanse os Olhos</h3>
+        
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs text-slate-700 text-left my-3 space-y-2">
+          <p class="font-semibold text-slate-900">Exercicio 20-20-20 de Saude Visual:</p>
+          <p class="text-[11px] leading-relaxed">Tire o olhar do celular e foque em um objeto a cerca de 6 metros de distancia durante 20 segundos. Respire fundo e relaxe os ombros.</p>
+        </div>
+
+        <p class="text-xs text-slate-500 mb-4">Ao confirmar o cumprimento do exercicio, seu aparelho sera liberado e voce recebera pontos bonus.</p>
+
+        <button onclick="confirmConsciousPauseBtn()" class="w-full py-3 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-md transition">
+          Confirmar Pausa Consciente (+15 pts)
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- JAVASCRIPT: LOGICA DE NEGOCIO, DETECTOR RF07, CRONOMETRO E ROTAS -->
+  <!-- ===================================================================== -->
+  <script>
+    // ESTADO LOCAL DO CLIENTE
+    let currentRole = 'teacher';
+    let currentRoomPin = '492810';
+    let currentStudentId = 'aluno_1';
+    let studentPoints = 70;
+    let studentStreak = 5;
+    let focusDurationMinutes = 25;
+    let focusSecondsRemaining = 25 * 60;
+    let isTimerRunning = false;
+    let timerInterval = null;
+    let heartbeatInterval = null;
+    let triviaIndex = 0;
+
+    const triviaList = [
+      { category: "Neurociencia", title: "O poder do cerebro", content: "O cerebro humano consome cerca de 20% de toda a energia do corpo, mesmo representando apenas 2% da massa corporal." },
+      { category: "Astronomia", title: "A velocidade da luz", content: "A luz do Sol viaja a cerca de 300.000 km/s pelo vacuo e leva 8 minutos e 20 segundos para alcancar a Terra." },
+      { category: "Biologia e Ecologia", title: "Rede subterranea das florestas", content: "As arvores compartilham agua e nutrientes atraves de uma rede fungica no subsolo chamada micorriza." },
+      { category: "Historia e Quimica", title: "O alimento eterno", content: "O mel puro nao estraga! Arqueologos descobriram potes de mel com mais de 3.000 anos no Egito Antigo em perfeito estado." },
+      { category: "Fisica Espacial", title: "O silencio do cosmos", content: "No espaco sideral existe vacuo quase absoluto, portanto as ondas sonoras nao se propagam. O universo e silencioso." }
+    ];
+
+    // =========================================================================
+    // INICIALIZACAO & SELECAO DE PAPEL (PROFESSOR VS ALUNO)
+    // =========================================================================
+    document.addEventListener("DOMContentLoaded", () => {
+      updateClock();
+      setInterval(updateClock, 10000);
+      setupVisibilityDetector(); // RF07
+      refreshRoomState();
+    });
+
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById("statusBarClock");
+      if (el) el.innerText = `${h}:${m}`;
+    }
+
+    function switchRole(roleValue) {
+      if (roleValue === 'teacher') {
+        currentRole = 'teacher';
+        document.getElementById('view-teacher').style.display = 'block';
+        document.getElementById('view-student').style.display = 'none';
+        document.getElementById('tabSalaLabel').innerText = 'Painel do Docente';
+      } else {
+        currentRole = 'student';
+        currentStudentId = roleValue;
+        document.getElementById('view-teacher').style.display = 'none';
+        document.getElementById('view-student').style.display = 'block';
+        document.getElementById('tabSalaLabel').innerText = 'Meu Foco';
+
+        // Atualiza nome no input
+        const nameMap = { 'aluno_1': 'Evelyn', 'aluno_2': 'Thiago', 'aluno_3': 'Marley' };
+        document.getElementById('studentInputName').value = nameMap[roleValue] || 'Aluno';
+      }
+    }
+
+    function switchTab(tabId) {
+      const tabs = ['sala', 'metas', 'relatorio', 'extras'];
+      tabs.forEach(t => {
+        const contentEl = document.getElementById('content-' + t);
+        const tabBtn = document.getElementById('tab-' + t);
+        if (contentEl) contentEl.style.display = (t === tabId) ? 'block' : 'none';
+        if (tabBtn) {
+          if (t === tabId) {
+            tabBtn.classList.add('text-brand-cyan', 'bg-sky-50', 'font-bold');
+            tabBtn.classList.remove('hover:bg-slate-100');
+          } else {
+            tabBtn.classList.remove('text-brand-cyan', 'bg-sky-50', 'font-bold');
+            tabBtn.classList.add('hover:bg-slate-100');
+          }
+        }
+      });
+    }
+
+    // =========================================================================
+    // RF01: CRIACAO DE SALA COM PIN DE 6 DIGITOS
+    // =========================================================================
+    async function createNewRoom() {
+      try {
+        const res = await fetch('/api/rooms/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            teacher_name: "Prof. Ricardo",
+            subject: "Matematica Ativa",
+            class_id: "TURMA_A",
+            duration: focusDurationMinutes
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          currentRoomPin = data.room.pin;
+          document.getElementById('teacherRoomPinDisplay').innerText = currentRoomPin;
+          document.getElementById('studentInputPin').value = currentRoomPin;
+          document.getElementById('studentRoomLabel').innerText = `PIN ${currentRoomPin} | Matematica Ativa`;
+          alert(`Sala criada com sucesso! Codigo PIN: ${currentRoomPin}`);
+          refreshRoomState();
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function copyPIN() {
+      navigator.clipboard.writeText(currentRoomPin);
+      alert(`PIN ${currentRoomPin} copiado para a area de transferencia.`);
+    }
+
+    // =========================================================================
+    // RF02 & RF12: PAINEL AO VIVO E META COLETIVA
+    // =========================================================================
+    async function refreshRoomState() {
+      try {
+        const res = await fetch(`/api/rooms/${currentRoomPin}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data.success) return;
+
+        // Atualiza contagem de alunos
+        const countEl = document.getElementById('teacherConnectedCount');
+        if (countEl) countEl.innerText = data.total_connected;
+
+        // Atualiza lista de alunos conectados
+        const listEl = document.getElementById('teacherStudentsList');
+        if (listEl && data.connected_students) {
+          listEl.innerHTML = data.connected_students.map(st => `
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-full bg-teal-100 text-teal-800 font-bold flex items-center justify-center text-xs">
+                  ${st.name.charAt(0)}
+                </div>
+                <div>
+                  <span class="font-bold text-slate-800 block leading-tight">${st.name}</span>
+                  <span class="text-[10px] text-slate-500">Ofensiva: ${st.streak_days || 1} dias | ${st.status}</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${st.status === 'Interrompido' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-800'}">
+                  ${st.status}
+                </span>
+                <span class="block text-[10px] text-slate-500 mt-0.5">+${st.points_session || 0} pts na sessao</span>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        // Atualiza barra coletiva no painel docente e aluno (RF12)
+        const percentStr = `${data.progress_percentage}%`;
+        const ptsText = `Pontos Coletivos: ${data.collective_points} / ${data.collective_target} pts`;
+
+        const teacherBar = document.getElementById('teacherGoalProgressBar');
+        if (teacherBar) teacherBar.style.width = percentStr;
+        const teacherPerc = document.getElementById('teacherGoalPercentage');
+        if (teacherPerc) teacherPerc.innerText = percentStr;
+        const teacherPts = document.getElementById('teacherGoalPointsText');
+        if (teacherPts) teacherPts.innerText = ptsText;
+
+        const studentBar = document.getElementById('studentGoalBar');
+        if (studentBar) studentBar.style.width = percentStr;
+        const studentPerc = document.getElementById('studentGoalPercent');
+        if (studentPerc) studentPerc.innerText = percentStr;
+
+        const metasBar = document.getElementById('metasTabGoalBar');
+        if (metasBar) metasBar.style.width = percentStr;
+        const metasPts = document.getElementById('metasTabPointsText');
+        if (metasPts) metasPts.innerText = `${data.collective_points} / ${data.collective_target} pontos acumulados`;
+        const metasPerc = document.getElementById('metasTabPercentText');
+        if (metasPerc) metasPerc.innerText = percentStr;
+
+        // Status de recompensa desbloqueada
+        if (data.reward_unlocked) {
+          const badge = document.getElementById('teacherRewardStatus');
+          if (badge) {
+            badge.innerText = 'DESBLOQUEADA';
+            badge.className = 'px-2 py-0.5 rounded bg-emerald-400 text-brand-navy font-black text-[10px]';
+          }
+        }
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // =========================================================================
+    // RF03: DISPARADOR DO CICLO COLETIVO DE FOCO
+    // =========================================================================
+    function setFocusDuration(minutes) {
+      focusDurationMinutes = minutes;
+      focusSecondsRemaining = minutes * 60;
+      document.querySelectorAll('.focus-dur-btn').forEach(btn => {
+        if (parseInt(btn.getAttribute('data-dur')) === minutes) {
+          btn.className = 'focus-dur-btn p-2 rounded-xl border-2 border-brand-teal bg-teal-50 text-xs font-bold text-brand-tealDark text-center';
+        } else {
+          btn.className = 'focus-dur-btn p-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:border-brand-teal text-center';
+        }
+      });
+      updateTimerDisplay();
+    }
+
+    async function startCollectiveFocus() {
+      try {
+        const res = await fetch(`/api/rooms/${currentRoomPin}/start_focus`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ duration: focusDurationMinutes })
+        });
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('teacherFocusBadge').innerText = 'Em Andamento';
+          document.getElementById('teacherFocusBadge').className = 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800';
+          
+          focusSecondsRemaining = focusDurationMinutes * 60;
+          startTimer();
+          alert(`Ciclo de foco de ${focusDurationMinutes} minutos iniciado para toda a sala.`);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // =========================================================================
+    // RF04: ACIONAMENTO DE ATIVIDADES DINAMICAS
+    // =========================================================================
+    async function broadcastDynamic(toolName, title, link, accessPin) {
+      try {
+        const res = await fetch(`/api/rooms/${currentRoomPin}/send_activity`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tool_name: toolName,
+            title: title,
+            direct_link: link,
+            access_pin: accessPin
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('teacherLastActivityTitle').innerText = `${toolName} - ${title}`;
+          document.getElementById('studentActivityTool').innerText = toolName;
+          document.getElementById('studentActivityTitle').innerText = title;
+          document.getElementById('studentActivityLink').href = link;
+          alert(`Dinamica '${title}' transmitida com sucesso para a tela dos alunos.`);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // =========================================================================
+    // RF05: ENTRADA NA SALA PELO ALUNO
+    // =========================================================================
+    async function joinRoomStudent() {
+      const name = document.getElementById('studentInputName').value.trim();
+      const pin = document.getElementById('studentInputPin').value.trim();
+      if (!name || !pin) {
+        alert('Por favor, informe seu nome e o PIN da sala.');
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/rooms/${pin}/join`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            student_name: name,
+            student_id: currentStudentId
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          currentRoomPin = pin;
+          document.getElementById('studentRoomLabel').innerText = `PIN ${pin} | ${data.subject || 'Matematica Ativa'}`;
+          document.getElementById('studentTeacherLabel').innerText = data.teacher_name || 'Prof. Ricardo';
+          alert(`Ingresso confirmado! Voce esta conectado a sala ${pin}.`);
+          refreshRoomState();
+        } else {
+          alert(data.error || 'Erro ao ingressar na sala.');
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // =========================================================================
+    // RF06 & RF09: MODO FOCO EM EXECUCAO E PONTUACAO INDIVIDUAL POR TEMPO
+    // =========================================================================
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      if (heartbeatInterval) clearInterval(heartbeatInterval);
+
+      isTimerRunning = true;
+      document.getElementById('btnStudentTimerToggle').innerText = 'Pausar Temporizador';
+
+      timerInterval = setInterval(() => {
+        if (focusSecondsRemaining > 0) {
+          focusSecondsRemaining--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          clearInterval(heartbeatInterval);
+          isTimerRunning = false;
+          triggerConsciousPause(); // RF08
+        }
+      }, 1000);
+
+      // RF09: A cada 60 segundos completos em foco, credita pontos
+      heartbeatInterval = setInterval(async () => {
+        if (isTimerRunning && focusSecondsRemaining > 0) {
+          try {
+            const res = await fetch(`/api/rooms/${currentRoomPin}/focus_tick`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                student_id: currentStudentId,
+                seconds: 60
+              })
+            });
+            const data = await res.json();
+            if (data.success) {
+              studentPoints = data.student_points;
+              document.getElementById('studentPointsDisplay').innerText = `${studentPoints} pontos`;
+              refreshRoomState();
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      }, 60000);
+    }
+
+    function toggleStudentFocusTimer() {
+      if (isTimerRunning) {
+        clearInterval(timerInterval);
+        clearInterval(heartbeatInterval);
+        isTimerRunning = false;
+        document.getElementById('btnStudentTimerToggle').innerText = 'Retomar Temporizador';
+      } else {
+        startTimer();
+      }
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(focusSecondsRemaining / 60);
+      const secs = focusSecondsRemaining % 60;
+      const fmt = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      const disp = document.getElementById('studentTimerDisplay');
+      if (disp) disp.innerText = fmt;
+    }
+
+    // =========================================================================
+    // RF07: DETECTOR DE SAIDA (ANTIDISTRACAO VIA VISIBILITYCHANGE)
+    // =========================================================================
+    function setupVisibilityDetector() {
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && isTimerRunning && focusSecondsRemaining > 0) {
+          handleFocusFailure("Troca de aba detectada via visibilitychange");
+        }
+      });
+
+      window.addEventListener("blur", () => {
+        if (isTimerRunning && focusSecondsRemaining > 0) {
+          handleFocusFailure("Minimizacao ou perda de foco da janela");
+        }
+      });
+    }
+
+    async function handleFocusFailure(reason) {
+      // Zera o tempo da rodada individual
+      focusSecondsRemaining = focusDurationMinutes * 60;
+      updateTimerDisplay();
+
+      // Notifica o backend
+      try {
+        await fetch(`/api/rooms/${currentRoomPin}/focus_failed`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            student_id: currentStudentId,
+            reason: reason
+          })
+        });
+      } catch (e) {
+        console.error(e);
+      }
+
+      // Exibe modal de alerta
+      document.getElementById('modalExitAlert').style.display = 'flex';
+      refreshRoomState();
+    }
+
+    function simulateTabExit() {
+      handleFocusFailure("Simulacao manual de saida de tela");
+    }
+
+    function dismissExitAlert() {
+      document.getElementById('modalExitAlert').style.display = 'none';
+    }
+
+    // =========================================================================
+    // RF08 & RF10: PAUSA CONSCIENTE E BONUS
+    // =========================================================================
+    function triggerConsciousPause() {
+      document.getElementById('modalConsciousPause').style.display = 'flex';
+    }
+
+    async function confirmConsciousPauseBtn() {
+      try {
+        const res = await fetch(`/api/rooms/${currentRoomPin}/confirm_pause`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ student_id: currentStudentId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          studentPoints = data.total_points;
+          document.getElementById('studentPointsDisplay').innerText = `${studentPoints} pontos`;
+          document.getElementById('modalConsciousPause').style.display = 'none';
+          alert(`Pausa Consciente Confirmada! Voce recebeu +${data.bonus_points} pontos bonus de descanso visual.`);
+          refreshRoomState();
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // =========================================================================
+    // RF11: SEQUENCIA DE PRESENCA (STREAK)
+    // =========================================================================
+    async function checkInAttendance() {
+      try {
+        const res = await fetch(`/api/students/${currentStudentId}/streak`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          studentStreak = data.streak_days;
+          document.getElementById('studentStreakDisplay').innerText = `Ofensiva: ${studentStreak} dias seguidos`;
+          document.getElementById('streakTitleCard').innerText = `Ofensiva: ${studentStreak} dias seguidos`;
+          alert(`Ofensiva atualizada! ${studentStreak} dias seguidos de presenca ativa (+10 pts).`);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // =========================================================================
+    // RECURSOS COMPLEMENTARES: DND, PILULAS, FOTOS E PDF
+    // =========================================================================
+    async function toggleDND() {
+      try {
+        const res = await fetch(`/api/students/${currentStudentId}/toggle_dnd`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          const titleEl = document.getElementById('dndStatusTitle');
+          const countEl = document.getElementById('dndStatusCount');
+          if (data.notifications_blocked) {
+            titleEl.innerText = 'Modo Foco: Notificacoes Bloqueadas';
+            countEl.innerText = `${data.notifications_silenced_count} alertas de redes silenciados`;
+          } else {
+            titleEl.innerText = 'Modo Padrao: Notificacoes Ativas';
+            countEl.innerText = 'Alertas de redes recebidos normalmente';
+          }
+          alert(data.message);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function nextTrivia() {
+      triviaIndex = (triviaIndex + 1) % triviaList.length;
+      const t = triviaList[triviaIndex];
+      document.getElementById('triviaCategory').innerText = t.category;
+      document.getElementById('triviaTitle').innerText = t.title;
+      document.getElementById('triviaContent').innerText = t.content;
+    }
+
+    async function submitPhotoQuest(questId) {
+      try {
+        const res = await fetch(`/api/students/${currentStudentId}/photo_quest`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ quest_id: questId, photo_name: 'registro_camera.jpg' })
+        });
+        const data = await res.json();
+        if (data.success) {
+          studentPoints = data.total_points;
+          document.getElementById('studentPointsDisplay').innerText = `${studentPoints} pontos`;
+          alert(data.message);
+        } else {
+          alert(data.error);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function uploadPdfActivity() {
+      const fileInput = document.getElementById('pdfFileInput');
+      const filename = (fileInput && fileInput.files.length > 0) ? fileInput.files[0].name : 'Trabalho_Biologia.pdf';
+      try {
+        const res = await fetch(`/api/students/${currentStudentId}/submit_pdf`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ activity_id: 'sessao_02', filename: filename })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert(`Atividade em PDF '${filename}' enviada com sucesso (+20 pts)!`);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>
