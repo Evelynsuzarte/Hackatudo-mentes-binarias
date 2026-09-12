@@ -791,7 +791,7 @@ class EducationalPlatformService:
 # 4. ROTAS DA API REST (FLASK)
 # ==============================================================================
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=".")
 
 @app.route("/", methods=["GET"])
 def home():
