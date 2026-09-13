@@ -1,5 +1,5 @@
 """
-Testes Automatizados - FocAE 3.0 Clean (Hackathon Bemobi)
+Testes Automatizados - FocAÊ 3.0 Clean (Hackathon Bemobi)
 =========================================================
 Validacao dos 12 Requisitos Funcionais (RF01 a RF12),
 regras de negocio, ausência de emojis nos retornos e rotas REST.

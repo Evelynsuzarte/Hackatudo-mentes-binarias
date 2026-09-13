@@ -1,5 +1,5 @@
 """
-FocAE - Backend MVP & Plataforma Educacional de Foco Consciente (Hackathon Bemobi)
+FocAÊ - Backend MVP & Plataforma Educacional de Foco Consciente (Hackathon Bemobi)
 ================================================================================
 Sistema de gestao escolar, foco consciente em smartphones, metodologias ativas,
 saude mental e gamificacao cooperativa (individual e coletiva).
@@ -797,7 +797,7 @@ app = Flask(__name__, template_folder=".")
 def home():
     if request.headers.get("Accept") == "application/json" or request.args.get("format") == "json":
         return jsonify({
-            "project": "FocAE - Foco Consciente e Gamificacao Educacional",
+            "project": "FocAÊ - Foco Consciente e Gamificacao Educacional",
             "version": "3.0 Clean",
             "rooms": len(db.rooms),
             "students": len(db.students),
@@ -809,7 +809,7 @@ def home():
 def health():
     return jsonify({
         "status": "online",
-        "app": "FocAE",
+        "app": "FocAÊ",
         "timestamp": datetime.now().isoformat(),
         "rooms": len(db.rooms),
         "students": len(db.students),
@@ -976,7 +976,7 @@ def run_console_demo():
     sub_sep = "-" * 70
 
     print("\n" + sep)
-    print("  [FocAE] - PLATAFORMA MOBILE & FOCO CONSCIENTE NA ESCOLA")
+    print("  [FocAÊ] - PLATAFORMA MOBILE & FOCO CONSCIENTE NA ESCOLA")
     print("  Hackathon Bemobi | Saude Mental, Autonomia e Metodologias Ativas")
     print(sep)
 
