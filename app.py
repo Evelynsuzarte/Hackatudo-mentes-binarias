@@ -971,6 +971,46 @@ def get_pdf_submissions():
         "submissions": [asdict(s) for s in db.pdf_submissions]
     })
 
+@app.route("/api/activities/puzzle_pair", methods=["POST"])
+def puzzle_pair_route():
+    data = request.get_json() or {}
+    peer_code = data.get("peer_code", "PAR-1934")
+    student_id = data.get("student_id", "aluno_1")
+    student = db.students.get(student_id)
+    if student:
+        student.points += 50
+    return jsonify({
+        "success": True,
+        "message": f"Conexao estabelecida via {peer_code}. Quebra-cabeca sincronizado entre as duas telas (+50 pts em grupo).",
+        "peer_code": peer_code,
+        "points_reward": 50,
+        "total_points": student.points if student else 120
+    })
+
+@app.route("/api/activities/complete_challenge", methods=["POST"])
+def complete_challenge_route():
+    data = request.get_json() or {}
+    challenge_type = data.get("type", "estudo_30m")
+    student_id = data.get("student_id", "aluno_1")
+    student = db.students.get(student_id)
+    rewards = {
+        "estudo_30m": {"pts": 35, "presence_point": True, "badge": "Foco de Meia Hora"},
+        "leitura_3m": {"pts": 100, "presence_point": False, "badge": "Medalha Leitor Voraz"},
+        "presenca_semana": {"pts": 40, "presence_point": False, "badge": "Selo Semana Perfeita"},
+        "presenca_mes": {"pts": 120, "presence_point": True, "badge": "Trofeu Mes Destaque"}
+    }
+    r = rewards.get(challenge_type, {"pts": 20, "presence_point": False, "badge": "Participacao"})
+    if student:
+        student.points += r["pts"]
+    return jsonify({
+        "success": True,
+        "type": challenge_type,
+        "points_reward": r["pts"],
+        "presence_point": r["presence_point"],
+        "badge": r["badge"],
+        "total_points": student.points if student else 100
+    })
+
 def run_console_demo():
     sep = "=" * 70
     sub_sep = "-" * 70

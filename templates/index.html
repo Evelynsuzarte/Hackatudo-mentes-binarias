@@ -228,6 +228,69 @@
     <main class="p-4 space-y-4 flex-1">
 
       <!-- =================================================================== -->
+      <!-- QUADRO DE PONTUACAO TOTAL (DESTAQUE VISIVEL NO TOPO DO APP) -->
+      <!-- =================================================================== -->
+      <div id="quadroPontosTotalCard" class="bg-white rounded-2xl border-2 border-teal-500/30 p-4 shadow-sm relative overflow-hidden transition-all duration-300">
+        <!-- Detalhe decorativo suave de fundo -->
+        <div class="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-teal-50/80 pointer-events-none"></div>
+
+        <div class="flex items-center justify-between mb-2 relative z-10">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center font-black shadow-xs">
+              <svg class="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <span id="quadroPontosSubtitle" class="text-[10px] font-extrabold uppercase tracking-wider text-teal-700 block">Painel de Pontuacao</span>
+              <h3 id="quadroPontosTitle" class="text-sm font-black text-brand-navy leading-none">Total de Pontos</h3>
+            </div>
+          </div>
+
+          <span id="quadroPontosBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-teal-100 text-teal-800 border border-teal-300/60 font-mono">
+            Nivel 3 - Foco Ativo
+          </span>
+        </div>
+
+        <!-- Numeros em Grande Destaque -->
+        <div class="flex items-baseline justify-between my-2 relative z-10">
+          <div class="flex items-baseline gap-2">
+            <span id="totalPontosNumero" class="text-3xl sm:text-4xl font-black font-mono tracking-tight text-brand-navy">70</span>
+            <span class="text-xs font-bold text-slate-500">pontos acumulados</span>
+          </div>
+          <div class="text-right">
+            <span id="quadroCoinsBadge" class="text-xs font-black text-amber-800 font-mono bg-amber-50 border border-amber-300/70 px-2.5 py-1 rounded-xl shadow-2xs">FocACoins: 50 FC</span>
+          </div>
+        </div>
+
+        <!-- Detalhamento em 3 Mini-Quadradinhos -->
+        <div class="mt-3 pt-2.5 border-t border-slate-100 grid grid-cols-3 gap-2 text-center relative z-10">
+          <div class="p-2 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="text-[9px] text-slate-400 font-bold uppercase block">Foco Individual</span>
+            <strong id="quadroFocoPts" class="text-xs font-black text-slate-800 font-mono">40 pts</strong>
+          </div>
+          <div class="p-2 rounded-xl bg-teal-50/70 border border-teal-100">
+            <span class="text-[9px] text-teal-700 font-bold uppercase block">Em Grupo</span>
+            <strong id="quadroGrupoPts" class="text-xs font-black text-teal-800 font-mono">20 pts</strong>
+          </div>
+          <div class="p-2 rounded-xl bg-amber-50/70 border border-amber-100">
+            <span class="text-[9px] text-amber-700 font-bold uppercase block">Bonus Pausa</span>
+            <strong id="quadroBonusPts" class="text-xs font-black text-amber-800 font-mono">10 pts</strong>
+          </div>
+        </div>
+
+        <!-- Barra de Progresso de Nivel / Recompensa -->
+        <div class="mt-2.5 relative z-10">
+          <div class="flex justify-between text-[10px] font-semibold text-slate-500 mb-1">
+            <span id="quadroNivelLabel">Meta para o Nivel 4 (Explorador Senior)</span>
+            <span id="quadroProgressoTexto" class="font-bold text-teal-700 font-mono">70 / 100 pts (70%)</span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
+            <div id="quadroBarraProgresso" class="bg-teal-600 h-2 rounded-full transition-all duration-500" style="width: 70%;"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- =================================================================== -->
       <!-- ABA 1: PAINEL DA SALA (VISAO DO PROFESSOR OU VISAO DO ALUNO) -->
       <!-- =================================================================== -->
       <section id="content-sala" class="space-y-4">
@@ -687,6 +750,323 @@
       <!-- =================================================================== -->
       <section id="content-extras" class="space-y-4" style="display:none;">
 
+        <!-- ================================================================= -->
+        <!-- AREA DE LEMBRANCA DE RECOMPENSAS (PAINEL DE BENEFICIOS) -->
+        <!-- ================================================================= -->
+        <div class="bg-white rounded-2xl border-2 border-amber-500/30 p-4 shadow-xs relative overflow-hidden">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">
+                <svg class="w-4 h-4 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+              </div>
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-800 block">Vitrine de Conquistas</span>
+                <h3 class="text-sm font-black text-brand-navy">Lembrança de Recompensas</h3>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
+              Painel Ativo
+            </span>
+          </div>
+          <p class="text-xs text-slate-600 mb-3">Acompanhe as recompensas ativas, os pontos de presença conquistados e os benefícios liberados pelo cumprimento das metas.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div class="p-3 rounded-xl bg-amber-50/60 border border-amber-200/70">
+              <div class="flex items-center justify-between mb-1">
+                <strong class="text-amber-950 font-bold">5 Minutos Livres no Final da Aula</strong>
+                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">Conquistada</span>
+              </div>
+              <p class="text-[11px] text-slate-600">Liberado pelo cumprimento coletivo de 100% da meta de foco da sala.</p>
+            </div>
+
+            <div class="p-3 rounded-xl bg-teal-50/60 border border-teal-200/70">
+              <div class="flex items-center justify-between mb-1">
+                <strong class="text-teal-950 font-bold">Pontos na Meta de Presença</strong>
+                <span id="presencaPointsBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-teal-100 text-teal-800 font-mono">+3 Pontos Acumulados</span>
+              </div>
+              <p class="text-[11px] text-slate-600">Valido na avaliacao continua por cumprir desafios de estudo, memoria e assiduidade.</p>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between mb-1">
+                <strong class="text-slate-800 font-bold">Escolha da Dinâmica Semanal</strong>
+                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-800">Disponivel</span>
+              </div>
+              <p class="text-[11px] text-slate-600">A equipe ou aluno com maior engajamento escolhe entre Kahoot ou Gartic na sexta-feira.</p>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between mb-1">
+                <strong class="text-slate-800 font-bold">Sessao Cinema Educativo</strong>
+                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-purple-100 text-purple-800">Meta: 2h de Foco</span>
+              </div>
+              <p class="text-[11px] text-slate-600">Recompensa da turma ao atingir duas horas de foco continuo da sala inteira.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- ATIVIDADE EXTRA: JOGO DA MEMORIA DE BIOLOGIA NO CELULAR -->
+        <!-- ================================================================= -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center font-bold text-xs">
+                <svg class="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+              </div>
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Atividade Prática no Celular</span>
+                <h3 class="text-sm font-bold text-brand-navy">Jogo da Memória: Biologia Celular</h3>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-50 text-teal-800 border border-teal-200">
+              4 Pares
+            </span>
+          </div>
+          <p class="text-xs text-slate-600 mb-2">Encontre os pares de organelas e estruturas celulares na tela do celular.</p>
+
+          <!-- Banner de Recompensa -->
+          <div class="mb-3 p-2 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs">
+            <span class="text-[11px] font-bold text-emerald-900">Recompensa da Atividade:</span>
+            <span class="font-bold text-emerald-800 text-[11px]">+30 pts e +1 Ponto na Meta de Presença</span>
+          </div>
+
+          <!-- Tabuleiro do Jogo da Memoria -->
+          <div id="memoryGameBoard" class="grid grid-cols-4 gap-2 my-3">
+            <!-- 8 cartas renderizadas dinamicamente via JS -->
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
+            <span id="memoryGameStatus">Toque nas cartas para encontrar os pares.</span>
+            <button onclick="initMemoryGame()" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 font-bold text-slate-700 text-[11px] transition">
+              Reiniciar Jogo
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- ATIVIDADE EM GRUPO: MONTAR QUEBRA-CABECA (CONECTAR COM OUTRO CELULAR) -->
+        <!-- ================================================================= -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-sky-100 text-sky-800 flex items-center justify-center font-bold text-xs">
+                <svg class="w-4 h-4 text-sky-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
+              </div>
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-sky-700 block">Dinamica em Grupo</span>
+                <h3 class="text-sm font-black text-brand-navy">Quebra-Cabeça Cooperativo entre Celulares</h3>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-200">
+              Dois Dispositivos
+            </span>
+          </div>
+          <p class="text-xs text-slate-600 mb-2">Conecte seu celular ao de um colega de classe via codigo de pareamento para montarem juntos um quebra-cabeca interativo dividido entre as duas telas.</p>
+
+          <!-- Banner de Recompensa -->
+          <div class="mb-3 p-2 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-between text-xs">
+            <span class="text-[11px] font-bold text-sky-900">Recompensa da Atividade:</span>
+            <span class="font-bold text-sky-800 text-[11px]">+50 pts em Grupo e Troféu Colaboração</span>
+          </div>
+
+          <!-- Status de Conexao e Botao de Pareamento -->
+          <div id="puzzlePairStatusBox" class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs mb-1">
+            <div>
+              <span class="text-[10px] text-slate-500 font-bold block">Status de Conexão</span>
+              <strong id="puzzleConnectionText" class="text-slate-800">Nenhum celular conectado no momento</strong>
+            </div>
+            <button onclick="openPuzzlePairModal()" class="px-3 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-xs transition">
+              Conectar com Outro Celular
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- DESAFIOS INDIVIDUAIS: ESTUDO, LEITURA TRIMESTRAL E PRESENCA -->
+        <!-- ================================================================= -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Autodisciplina e Continuidade</span>
+          <h3 class="text-sm font-bold text-brand-navy mb-2">Desafios Individuais de Estudo e Presença</h3>
+          <p class="text-xs text-slate-600 mb-3">Metas de longo prazo para desenvolver habitos consistentes de aprendizagem e assiduidade.</p>
+
+          <div class="space-y-3">
+            <!-- 1. Estudo Continuo por Meia Hora -->
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+              <div class="flex items-center justify-between mb-1">
+                <div>
+                  <strong class="text-slate-900 block font-bold text-xs">Estudo Contínuo por Meia Hora (30 min)</strong>
+                  <span class="text-[11px] text-slate-500">Mantenha a concentracao em material didatico sem interrupcoes por 30 minutos.</span>
+                </div>
+                <button onclick="completeIndividualChallenge('estudo_30m')" class="px-3 py-1.5 rounded-xl bg-brand-navy hover:bg-brand-navyLight text-white font-bold text-[11px] transition shrink-0 ml-2">
+                  Iniciar / Concluir
+                </button>
+              </div>
+              <div class="mt-2 pt-2 border-t border-slate-200 flex items-center justify-between text-[11px]">
+                <span class="text-emerald-800 font-bold">Recompensa: +35 pts e +1 Ponto para Metas de Presença</span>
+                <span class="text-slate-500 font-mono">Status: Disponivel Hoje</span>
+              </div>
+            </div>
+
+            <!-- 2. Leitura de um Livro em Tres Meses -->
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+              <div class="flex items-center justify-between mb-1">
+                <div>
+                  <strong class="text-slate-900 block font-bold text-xs">Leitura de um Livro em Três Meses</strong>
+                  <span class="text-[11px] text-slate-500">Desafio trimestral de leitura completa de uma obra literaria ou cientifica.</span>
+                </div>
+                <button onclick="completeIndividualChallenge('leitura_3m')" class="px-3 py-1.5 rounded-xl bg-brand-navy hover:bg-brand-navyLight text-white font-bold text-[11px] transition shrink-0 ml-2">
+                  Registrar Leitura
+                </button>
+              </div>
+              <!-- Barra de progresso trimestral -->
+              <div class="mt-2">
+                <div class="flex justify-between text-[10px] text-slate-500 mb-1">
+                  <span>Progresso do Livro: Dom Casmurro</span>
+                  <span class="font-bold text-teal-700 font-mono">148 / 220 págs (67%)</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                  <div class="bg-teal-600 h-1.5 rounded-full" style="width: 67%;"></div>
+                </div>
+              </div>
+              <div class="mt-2 pt-2 border-t border-slate-200 flex items-center justify-between text-[11px]">
+                <span class="text-teal-800 font-bold">Recompensa: +100 pts e Medalha Leitor Voraz</span>
+                <span class="text-slate-500 font-mono">Prazo: 90 dias</span>
+              </div>
+            </div>
+
+            <!-- 3. Presenca na Sala durante Uma Semana Seguida -->
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+              <div class="flex items-center justify-between mb-1">
+                <div>
+                  <strong class="text-slate-900 block font-bold text-xs">Presença na Sala durante Uma Semana Seguida</strong>
+                  <span class="text-[11px] text-slate-500">Pontualidade e presenca ativa em todos os 5 dias letivos da semana.</span>
+                </div>
+                <button onclick="completeIndividualChallenge('presenca_semana')" class="px-3 py-1.5 rounded-xl bg-brand-navy hover:bg-brand-navyLight text-white font-bold text-[11px] transition shrink-0 ml-2">
+                  Verificar Semana
+                </button>
+              </div>
+              <div class="mt-1 flex gap-1">
+                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">Seg OK</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">Ter OK</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">Qua OK</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">Qui OK</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">Sex OK</span>
+              </div>
+              <div class="mt-2 pt-2 border-t border-slate-200 flex items-center justify-between text-[11px]">
+                <span class="text-emerald-800 font-bold">Recompensa: +40 pts e Selo Semana Perfeita</span>
+                <span class="text-emerald-700 font-bold">Ofensiva: 5/5 dias</span>
+              </div>
+            </div>
+
+            <!-- 4. Presenca na Sala durante Um Mes Seguido -->
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+              <div class="flex items-center justify-between mb-1">
+                <div>
+                  <strong class="text-slate-900 block font-bold text-xs">Presença na Sala durante Um Mês Seguido</strong>
+                  <span class="text-[11px] text-slate-500">Constancia maxima: participacao em todas as aulas ao longo do mes (20 dias letivos).</span>
+                </div>
+                <button onclick="completeIndividualChallenge('presenca_mes')" class="px-3 py-1.5 rounded-xl bg-brand-navy hover:bg-brand-navyLight text-white font-bold text-[11px] transition shrink-0 ml-2">
+                  Verificar Mês
+                </button>
+              </div>
+              <div class="mt-2">
+                <div class="flex justify-between text-[10px] text-slate-500 mb-1">
+                  <span>Progresso do Mês Atual</span>
+                  <span class="font-bold text-teal-700 font-mono">18 / 20 dias letivos (90%)</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                  <div class="bg-teal-600 h-1.5 rounded-full" style="width: 90%;"></div>
+                </div>
+              </div>
+              <div class="mt-2 pt-2 border-t border-slate-200 flex items-center justify-between text-[11px]">
+                <span class="text-emerald-800 font-bold">Recompensa: +120 pts e +1 Ponto para Metas de Presença</span>
+                <span class="text-slate-500 font-mono">Faltam 2 dias</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- METAS EM GRUPO DA SALA DE AULA -->
+        <!-- ================================================================= -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Cooperação Coletiva</span>
+          <h3 class="text-sm font-bold text-brand-navy mb-2">Metas em Grupo da Turma</h3>
+          <p class="text-xs text-slate-600 mb-3">Atividades cooperativas onde toda a sala de aula se une para atingir um objetivo comum e conquistar benefícios para a turma.</p>
+
+          <div class="space-y-3">
+            <!-- 1. Meta: Sala inteira nao acessar o celular durante o intervalo -->
+            <div class="p-3 rounded-xl bg-teal-50/70 border border-teal-200 text-xs">
+              <div class="flex items-center justify-between mb-1">
+                <div>
+                  <strong class="text-slate-900 block font-bold text-xs">Intervalo 100% Offline (Sala Inteira sem Celular)</strong>
+                  <span class="text-[11px] text-slate-600">A turma inteira guarda os celulares durante os 20 minutos de recreio escolar.</span>
+                </div>
+                <button onclick="confirmGroupGoal('intervalo_offline')" class="px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-[11px] transition shrink-0 ml-2">
+                  Validar Recreio
+                </button>
+              </div>
+              <div class="mt-2 pt-2 border-t border-teal-200/60 flex items-center justify-between text-[11px]">
+                <span class="text-teal-900 font-bold">Recompensa da Turma: +60 pts coletivos e 15 min de recreação livre</span>
+                <span class="text-teal-800 font-mono">Turma A: 100% Adesão</span>
+              </div>
+            </div>
+
+            <!-- 2. Meta: Manter o foco em aula durante duas horas -->
+            <div class="p-3 rounded-xl bg-teal-50/70 border border-teal-200 text-xs">
+              <div class="flex items-center justify-between mb-1">
+                <div>
+                  <strong class="text-slate-900 block font-bold text-xs">Foco Coletivo em Aula por Duas Horas (120 min)</strong>
+                  <span class="text-[11px] text-slate-600">Toda a sala mantem a atencao ativa durante o bloco duplo de aulas sem desvios digitais.</span>
+                </div>
+                <button onclick="confirmGroupGoal('foco_2h')" class="px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-[11px] transition shrink-0 ml-2">
+                  Validar Ciclo
+                </button>
+              </div>
+              <div class="mt-2">
+                <div class="flex justify-between text-[10px] text-slate-600 mb-1">
+                  <span>Progresso do Bloco de 2 Horas</span>
+                  <span class="font-bold text-teal-800 font-mono">95 / 120 min (79%)</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                  <div class="bg-teal-600 h-1.5 rounded-full" style="width: 79%;"></div>
+                </div>
+              </div>
+              <div class="mt-2 pt-2 border-t border-teal-200/60 flex items-center justify-between text-[11px]">
+                <span class="text-teal-900 font-bold">Recompensa da Turma: +150 pts coletivos e Sessão de Cinema com Pipoca</span>
+                <span class="text-teal-800 font-mono">Restam 25 min</span>
+              </div>
+            </div>
+
+            <!-- 3. Desafio: Toda a turma tirar foto de um livro que gosta muito -->
+            <div class="p-3 rounded-xl bg-sky-50 border border-sky-200 text-xs">
+              <div class="flex items-center justify-between mb-1">
+                <div>
+                  <strong class="text-slate-900 block font-bold text-xs">Mural Literário: Foto do Livro Favorito de Toda a Turma</strong>
+                  <span class="text-[11px] text-slate-600">Desafio colaborativo para que todos os alunos enviem a foto da capa do seu livro preferido.</span>
+                </div>
+                <button onclick="submitGroupBookPhoto()" class="px-3 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-[11px] transition shrink-0 ml-2">
+                  Enviar Minha Foto
+                </button>
+              </div>
+              <div class="mt-2">
+                <div class="flex justify-between text-[10px] text-slate-600 mb-1">
+                  <span id="groupBookPhotoCountText">Fotos Enviadas pelos Alunos da Sala</span>
+                  <span id="groupBookPhotoPercentText" class="font-bold text-sky-800 font-mono">24 / 30 alunos (80%)</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                  <div id="groupBookPhotoBar" class="bg-sky-600 h-1.5 rounded-full" style="width: 80%;"></div>
+                </div>
+              </div>
+              <div class="mt-2 pt-2 border-t border-sky-200 flex items-center justify-between text-[11px]">
+                <span class="text-sky-900 font-bold">Recompensa da Turma: +80 pts coletivos e Mural Literário Publicado</span>
+                <span id="groupBookMissingText" class="text-sky-800 font-mono">Faltam 6 fotos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Pilulas de Conhecimento Geral (Curiosidades Educativas) -->
         <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
           <div class="flex items-center justify-between mb-2">
@@ -806,6 +1186,52 @@
       </div>
     </div>
 
+    <!-- ===================================================================== -->
+    <!-- 6. MODAL: PAREAMENTO DE QUEBRA-CABECA ENTRE DOIS CELULARES -->
+    <!-- ===================================================================== -->
+    <div id="modalPuzzlePair" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4" style="display:none;">
+      <div class="bg-white w-full max-w-sm rounded-3xl p-5 shadow-2xl border border-sky-200">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-sky-100 text-sky-800 flex items-center justify-center font-bold text-xs">
+              QC
+            </div>
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-sky-700 block">Conectar Dispositivos</span>
+              <h3 class="text-sm font-black text-brand-navy">Quebra-Cabeça em Dupla</h3>
+            </div>
+          </div>
+          <button onclick="closePuzzlePairModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">
+            &times;
+          </button>
+        </div>
+
+        <p class="text-xs text-slate-600 mb-3">Conecte dois celulares para sincronizar as peças do quebra-cabeça. Um aparelho exibe as peças ímpares e o outro as peças pares.</p>
+
+        <!-- Codigo Gerado deste Aparelho -->
+        <div class="p-3 rounded-2xl bg-sky-50 border border-sky-200 text-center mb-3">
+          <span class="text-[10px] font-bold uppercase text-sky-700 block">Seu Código de Pareamento</span>
+          <strong class="text-xl font-black font-mono text-brand-navy tracking-widest block my-1">PAR-5821</strong>
+          <span class="text-[10px] text-slate-500">Mostre este código para o colega conectar</span>
+        </div>
+
+        <!-- Ou Conectar no Aparelho do Colega -->
+        <div class="space-y-2 mb-4">
+          <label class="block text-[11px] font-bold text-slate-700">Ou digite o código do celular do colega:</label>
+          <input type="text" id="inputPeerCode" placeholder="Ex: PAR-1934" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-mono font-bold text-center uppercase text-slate-800 focus:outline-none focus:border-sky-500">
+        </div>
+
+        <div class="space-y-2">
+          <button onclick="connectPuzzlePeer()" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-xs transition">
+            Parear e Iniciar Desafio (+50 pts)
+          </button>
+          <button onclick="closePuzzlePairModal()" class="w-full py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- ===================================================================== -->
@@ -841,6 +1267,9 @@
       setInterval(updateClock, 10000);
       setupVisibilityDetector(); // RF07
       refreshRoomState();
+      updateTotalPointsCard();
+      initMemoryGame();
+      updatePresenceBadge();
     });
 
     function updateClock() {
@@ -849,6 +1278,79 @@
       const m = String(now.getMinutes()).padStart(2, '0');
       const el = document.getElementById("statusBarClock");
       if (el) el.innerText = `${h}:${m}`;
+    }
+
+    function updateTotalPointsCard() {
+      let pts = studentPoints;
+      let title = "Total de Pontos";
+      let subtitle = "Painel de Pontuacao";
+      let badge = "Nivel 3 - Foco Ativo";
+      let label = "Meta para o Nivel 4 (Explorador Senior)";
+      let target = 100;
+      let coins = 50;
+
+      if (currentRole === 'teacher') {
+        pts = (window._collectivePoints !== undefined) ? window._collectivePoints : 105;
+        target = 150;
+        title = "Pontuacao Total da Sala";
+        subtitle = "Painel Docente (Turma A)";
+        badge = "Meta Coletiva (RF12)";
+        label = "Meta para Recompensa Coletiva (5 min livres)";
+        coins = Math.round(pts * 0.8);
+      } else {
+        const studentData = {
+          'aluno_1': { name: 'Evelyn', pts: studentPoints || 70, coins: 50 },
+          'aluno_2': { name: 'Thiago', pts: 45, coins: 35 },
+          'aluno_3': { name: 'Marley', pts: 50, coins: 40 }
+        };
+        const s = studentData[currentStudentId] || { name: 'Aluno', pts: studentPoints, coins: 50 };
+        if (currentStudentId === 'aluno_1') {
+          pts = studentPoints;
+          coins = Math.max(50, Math.round(pts * 0.7));
+        } else {
+          pts = s.pts;
+          coins = s.coins;
+        }
+        subtitle = `Painel de Pontuacao (${s.name})`;
+      }
+
+      const elNum = document.getElementById('totalPontosNumero');
+      if (elNum) elNum.innerText = pts;
+
+      const elTitle = document.getElementById('quadroPontosTitle');
+      if (elTitle) elTitle.innerText = title;
+
+      const elSub = document.getElementById('quadroPontosSubtitle');
+      if (elSub) elSub.innerText = subtitle;
+
+      const elBadge = document.getElementById('quadroPontosBadge');
+      if (elBadge) elBadge.innerText = badge;
+
+      const elCoins = document.getElementById('quadroCoinsBadge');
+      if (elCoins) elCoins.innerText = `FocACoins: ${coins} FC`;
+
+      const foco = Math.round(pts * 0.55);
+      const grupo = Math.round(pts * 0.30);
+      const bonus = Math.max(0, pts - foco - grupo);
+
+      const elFoco = document.getElementById('quadroFocoPts');
+      if (elFoco) elFoco.innerText = `${foco} pts`;
+
+      const elGrupo = document.getElementById('quadroGrupoPts');
+      if (elGrupo) elGrupo.innerText = `${grupo} pts`;
+
+      const elBonus = document.getElementById('quadroBonusPts');
+      if (elBonus) elBonus.innerText = `${bonus} pts`;
+
+      const pct = Math.min(100, Math.round((pts / target) * 100));
+      const elLabel = document.getElementById('quadroNivelLabel');
+      if (elLabel) elLabel.innerText = label;
+
+      const elProgTxt = document.getElementById('quadroProgressoTexto');
+      if (elProgTxt) elProgTxt.innerText = `${pts} / ${target} pts (${pct}%)`;
+
+      const elBar = document.getElementById('quadroBarraProgresso');
+      if (elBar) elBar.style.width = `${pct}%`;
     }
 
     function switchRole(roleValue) {
@@ -868,6 +1370,7 @@
         const nameMap = { 'aluno_1': 'Evelyn', 'aluno_2': 'Thiago', 'aluno_3': 'Marley' };
         document.getElementById('studentInputName').value = nameMap[roleValue] || 'Aluno';
       }
+      updateTotalPointsCard();
     }
 
     function switchTab(tabId) {
@@ -991,6 +1494,9 @@
             badge.className = 'px-2 py-0.5 rounded bg-emerald-400 text-brand-navy font-black text-[10px]';
           }
         }
+
+        window._collectivePoints = data.collective_points;
+        updateTotalPointsCard();
 
       } catch (err) {
         console.error(err);
@@ -1300,6 +1806,7 @@
         if (data.success) {
           studentPoints = data.total_points;
           document.getElementById('studentPointsDisplay').innerText = `${studentPoints} pontos`;
+          updateTotalPointsCard();
           alert(data.message);
         } else {
           alert(data.error);
@@ -1325,6 +1832,200 @@
       } catch (err) {
         console.error(err);
       }
+    }
+
+    // =========================================================================
+    // NOVAS ATIVIDADES: JOGO DA MEMORIA, QUEBRA-CABECA, DESAFIOS E METAS
+    // =========================================================================
+    let presencePointsBonus = 3;
+    let memoryCards = [];
+    let memoryFlipped = [];
+    let memoryMatchedCount = 0;
+    let isMemoryLocked = false;
+
+    const biologyTerms = [
+      { name: "Mitocôndria", desc: "Respiração Celular" },
+      { name: "Cloroplasto", desc: "Fotossíntese" },
+      { name: "DNA", desc: "Código Genético" },
+      { name: "Ribossomo", desc: "Síntese Proteica" }
+    ];
+
+    function initMemoryGame() {
+      const board = document.getElementById('memoryGameBoard');
+      if (!board) return;
+
+      memoryFlipped = [];
+      memoryMatchedCount = 0;
+      isMemoryLocked = false;
+
+      let deck = [];
+      biologyTerms.forEach((item, idx) => {
+        deck.push({ id: idx, term: item.name, desc: item.desc, key: idx + '_a' });
+        deck.push({ id: idx, term: item.name, desc: item.desc, key: idx + '_b' });
+      });
+
+      deck.sort(() => Math.random() - 0.5);
+      memoryCards = deck;
+
+      board.innerHTML = deck.map((c, i) => `
+        <button id="memCard_${i}" onclick="flipMemoryCard(${i})" class="h-16 rounded-xl bg-slate-100 hover:bg-slate-200 border-2 border-slate-200 p-1 flex flex-col items-center justify-center text-center transition-all duration-300">
+          <span class="card-cover text-xs font-black text-slate-400">?</span>
+          <div class="card-content hidden flex-col items-center">
+            <span class="text-[11px] font-black text-brand-navy leading-tight">${c.term}</span>
+            <span class="text-[8px] text-slate-500">${c.desc}</span>
+          </div>
+        </button>
+      `).join('');
+
+      const statusEl = document.getElementById('memoryGameStatus');
+      if (statusEl) statusEl.innerText = 'Toque nas cartas para encontrar os pares.';
+    }
+
+    function flipMemoryCard(index) {
+      if (isMemoryLocked) return;
+      const cardBtn = document.getElementById(`memCard_${index}`);
+      if (!cardBtn || memoryFlipped.includes(index) || cardBtn.classList.contains('matched')) return;
+
+      cardBtn.querySelector('.card-cover').classList.add('hidden');
+      cardBtn.querySelector('.card-content').classList.remove('hidden');
+      cardBtn.querySelector('.card-content').classList.add('flex');
+      cardBtn.classList.add('bg-sky-50', 'border-sky-400');
+      memoryFlipped.push(index);
+
+      if (memoryFlipped.length === 2) {
+        isMemoryLocked = true;
+        const [idx1, idx2] = memoryFlipped;
+        const card1 = memoryCards[idx1];
+        const card2 = memoryCards[idx2];
+
+        if (card1.id === card2.id) {
+          setTimeout(() => {
+            const btn1 = document.getElementById(`memCard_${idx1}`);
+            const btn2 = document.getElementById(`memCard_${idx2}`);
+            if (btn1 && btn2) {
+              btn1.className = 'h-16 rounded-xl bg-emerald-100 border-2 border-emerald-400 p-1 flex flex-col items-center justify-center text-center matched';
+              btn2.className = 'h-16 rounded-xl bg-emerald-100 border-2 border-emerald-400 p-1 flex flex-col items-center justify-center text-center matched';
+            }
+            memoryMatchedCount++;
+            memoryFlipped = [];
+            isMemoryLocked = false;
+
+            const statusEl = document.getElementById('memoryGameStatus');
+            if (statusEl) statusEl.innerText = `Par encontrado: ${card1.term}! (${memoryMatchedCount} / 4 pares)`;
+
+            if (memoryMatchedCount === 4) {
+              studentPoints += 30;
+              presencePointsBonus += 1;
+              updatePresenceBadge();
+              updateTotalPointsCard();
+              if (statusEl) statusEl.innerText = 'Jogo concluido com sucesso (+30 pts e +1 Presenca)!';
+              alert('Parabens! Jogo da Memoria concluido com 100% de acerto! Recompensa creditada: +30 pontos e +1 Ponto para as Metas de Presenca!');
+            }
+          }, 400);
+        } else {
+          setTimeout(() => {
+            const btn1 = document.getElementById(`memCard_${idx1}`);
+            const btn2 = document.getElementById(`memCard_${idx2}`);
+            if (btn1) {
+              btn1.querySelector('.card-cover').classList.remove('hidden');
+              btn1.querySelector('.card-content').classList.add('hidden');
+              btn1.querySelector('.card-content').classList.remove('flex');
+              btn1.className = 'h-16 rounded-xl bg-slate-100 hover:bg-slate-200 border-2 border-slate-200 p-1 flex flex-col items-center justify-center text-center transition-all duration-300';
+            }
+            if (btn2) {
+              btn2.querySelector('.card-cover').classList.remove('hidden');
+              btn2.querySelector('.card-content').classList.add('hidden');
+              btn2.querySelector('.card-content').classList.remove('flex');
+              btn2.className = 'h-16 rounded-xl bg-slate-100 hover:bg-slate-200 border-2 border-slate-200 p-1 flex flex-col items-center justify-center text-center transition-all duration-300';
+            }
+            memoryFlipped = [];
+            isMemoryLocked = false;
+          }, 900);
+        }
+      }
+    }
+
+    function updatePresenceBadge() {
+      const badge = document.getElementById('presencaPointsBadge');
+      if (badge) badge.innerText = `+${presencePointsBonus} Pontos Acumulados`;
+    }
+
+    // Quebra-Cabeca Cooperativo (Pareamento entre celulares)
+    function openPuzzlePairModal() {
+      document.getElementById('modalPuzzlePair').style.display = 'flex';
+    }
+
+    function closePuzzlePairModal() {
+      document.getElementById('modalPuzzlePair').style.display = 'none';
+    }
+
+    function connectPuzzlePeer() {
+      const input = document.getElementById('inputPeerCode');
+      const code = (input && input.value.trim()) ? input.value.trim().toUpperCase() : 'PAR-1934';
+      const statusText = document.getElementById('puzzleConnectionText');
+      if (statusText) {
+        statusText.innerText = `Conectado com Celular do Colega (${code}) | Peças Sincronizadas`;
+        statusText.className = 'text-sky-800 font-bold';
+      }
+      studentPoints += 50;
+      updateTotalPointsCard();
+      closePuzzlePairModal();
+      alert(`Conexao estabelecida com sucesso via ${code}! Pecas do quebra-cabeca sincronizadas entre as duas telas. Recompensa de +50 pontos em grupo creditada!`);
+    }
+
+    // Desafios Individuais
+    function completeIndividualChallenge(type) {
+      if (type === 'estudo_30m') {
+        studentPoints += 35;
+        presencePointsBonus += 1;
+        updatePresenceBadge();
+        updateTotalPointsCard();
+        alert('Desafio de Estudo Continuo (30 min) concluido! Voce manteve foco total no material didatico. Recompensa: +35 pontos e +1 Ponto para Metas de Presenca!');
+      } else if (type === 'leitura_3m') {
+        studentPoints += 100;
+        updateTotalPointsCard();
+        alert('Desafio Trimestral de Leitura validado! Obra literaria lida com sucesso. Recompensa: +100 pontos e Medalha Leitor Voraz desbloqueada!');
+      } else if (type === 'presenca_semana') {
+        studentPoints += 40;
+        updateTotalPointsCard();
+        alert('Semana Perfeita! Presenca ativa confirmada em todos os 5 dias da semana letiva. Recompensa: +40 pontos e Selo Semana Perfeita!');
+      } else if (type === 'presenca_mes') {
+        studentPoints += 120;
+        presencePointsBonus += 1;
+        updatePresenceBadge();
+        updateTotalPointsCard();
+        alert('Imersao Mensal Concluida! Participacao exemplar ao longo de 20 dias letivos seguidos. Recompensa: +120 pontos e +1 Ponto para Metas de Presenca!');
+      }
+    }
+
+    // Metas em Grupo da Turma
+    function confirmGroupGoal(type) {
+      if (type === 'intervalo_offline') {
+        studentPoints += 20;
+        if (window._collectivePoints !== undefined) window._collectivePoints += 60;
+        updateTotalPointsCard();
+        alert('Meta da Sala Inteira Validada! A turma inteira guardou os celulares no recreio (20 min offline). Recompensa da Turma: +60 pts coletivos e 15 minutos livres ao ar livre!');
+      } else if (type === 'foco_2h') {
+        studentPoints += 30;
+        if (window._collectivePoints !== undefined) window._collectivePoints += 150;
+        updateTotalPointsCard();
+        alert('Foco Coletivo de 2 Horas Concluido! Toda a sala permaneceu focada durante o bloco duplo de aulas. Recompensa da Turma: +150 pts coletivos e Sessao de Cinema com Pipoca liberada!');
+      }
+    }
+
+    function submitGroupBookPhoto() {
+      const percEl = document.getElementById('groupBookPhotoPercentText');
+      const barEl = document.getElementById('groupBookPhotoBar');
+      const missEl = document.getElementById('groupBookMissingText');
+
+      if (percEl) percEl.innerText = '25 / 30 alunos (83%)';
+      if (barEl) barEl.style.width = '83%';
+      if (missEl) missEl.innerText = 'Faltam 5 fotos';
+
+      studentPoints += 25;
+      if (window._collectivePoints !== undefined) window._collectivePoints += 80;
+      updateTotalPointsCard();
+      alert('Sua foto do livro favorito foi submetida para o Mural Literario da Turma! Recompensa da Turma: +80 pontos coletivos (+25 pts individuais).');
     }
   </script>
 </body>
